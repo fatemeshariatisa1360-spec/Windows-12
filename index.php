@@ -40,19 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- عنوان سایت که در گوگل نمایش داده می‌شود -->
-<title>Windows 12 - HP Portal</title>
-
-<!-- توضیحات سایت که زیر لینک در گوگل می‌آید -->
-<meta name="description" content="">
-
-<!-- کلمات کلیدی برای موتورهای جستجو -->
-<meta name="keywords" content="HP Portal">
-
-<!-- تعیین اینکه گوگل اجازه دارد سایت را ایندکس کند یا خیر -->
-<meta name="robots" content="index, follow">
-    <meta name="google-site-verification" content="JbcfgMjgGYaYToXGUplllcEw7HxHVW9QY9oHnlItAcU" />
-
+  <meta name="google-site-verification" content="JbcfgMjgGYaYToXGUplllcEw7HxHVW9QY9oHnlItAcU" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows 12 - HP Portal</title>
