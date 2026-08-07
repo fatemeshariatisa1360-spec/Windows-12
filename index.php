@@ -1,17 +1,17 @@
 <?php
-// Handle Google reCAPTCHA v3 configuration implementation
-$rec_site_key = "6LeotnktAAAAAD9smf4dVq9erT6ojRBAldOImGHV";
-$rec_secret_key = "6LeotnktAAAAAPYJvoOr4S_RjNXniOKEebuz4OF9";
-$recaptcha_message = "";
+// تنظیمات اعتبار سنجی Cloudflare Turnstile
+$turnstile_secret_key = "0x4AAAAAAEJZ2f5akLI-Nb6Q2B6WBXnyB2M";
+$verification_message = "";
 
+// بررسی اینکه آیا کاربر از سمت ویجت تایید را فرستاده است یا خیر
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $recaptcha_response = $_POST['g-recaptcha-response'] ?? '';
+    $token = $_POST['cf-turnstile-response'] ?? '';
     
-    if (!empty($recaptcha_response)) {
-        $verify_url = 'https://www.google.com/recaptcha/api/siteverify';
+    if (!empty($token)) {
+        $verify_url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
         $data = [
-            'secret' => $rec_secret_key,
-            'response' => $recaptcha_response,
+            'secret' => $turnstile_secret_key,
+            'response' => $token,
             'remoteip' => $_SERVER['REMOTE_ADDR']
         ];
 
@@ -28,24 +28,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result_json = json_decode($result);
 
         if ($result_json && $result_json->success) {
-            $recaptcha_message = "reCAPTCHA verification successful.";
+            // تایید موفقیت‌آمیز: تنظیم یک کوکی موقت Session که با بستن مرورگر منقضی می‌شود
+            setcookie("turnstile_verified", "true", 0, "/");
+            // رفرش کردن صفحه برای ورود به بخش اصلی سایت
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
         } else {
-            $recaptcha_message = "reCAPTCHA verification failed. Please try again.";
+            $verification_message = "تایید امنیتی ناموفق بود. لطفاً دوباره تلاش کنید.";
         }
     } else {
-        $recaptcha_message = "Please complete the reCAPTCHA.";
+        $verification_message = "لطفاً تایید کنید که ربات نیستید.";
     }
 }
+
+// بررسی اینکه آیا کاربر قبلاً در این نشست (Session) تایید کرده است یا خیر
+$is_verified = isset($_COOKIE['turnstile_verified']) && $_COOKIE['turnstile_verified'] === "true";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="google-site-verification" content="JbcfgMjgGYaYToXGUplllcEw7HxHVW9QY9oHnlItAcU" />
+    <meta name="google-site-verification" content="JbcfgMjgGYaYToXGUplllcEw7HxHVW9QY9oHnlItAcU" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows 12 - HP Portal</title>
-    <!-- Include Google reCAPTCHA API script with site key -->
-    <script src="https://www.google.com/recaptcha/api.js?render=6LeotnktAAAAAD9smf4dVq9erT6ojRBAldOImGHV" async defer></script>
+    <!-- اسکریپت رسمی کلادفلر Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <style>
         body {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -56,12 +63,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 0;
             color: #2b2b2b;
         }
-
-        /* Completely hide the floating Google reCAPTCHA badge */
-        .grecaptcha-badge {
-            display: none !important;
+        /* استایل صفحه اختصاصی تایید ربات (در صورتی که تایید نشده باشد) */
+        .turnstile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #e0f2f1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
         }
-
+        .turnstile-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            max-width: 400px;
+            width: 90%;
+        }
         .HP-title {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             width: fit-content;
@@ -71,7 +94,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             background-color: rgba(255, 255, 255, 0.85);
         }
-
         .highlight-text {
             background-color: rgba(255, 255, 255, 0.85);
             padding: 10px;
@@ -79,12 +101,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin: 20px auto;
             border-radius: 5px;
         }
-
         mark {
             background-color: transparent !important;
             font-weight: bold;
         }
-
         table {
             font-family: arial, sans-serif;
             border-collapse: collapse;
@@ -93,13 +113,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             background-color: rgba(255, 255, 255, 0.85);
         }
-
         td, th {
             border: 1px solid rgba(0,0,0,0.2);
             text-align: left;
             padding: 12px;
         }
-
         .city {
             border: 2px solid rgba(0,0,0,0.3);
             margin: 20px auto;
@@ -109,11 +127,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             background-color: rgba(255, 255, 255, 0.85);
         }
-
         * {
             box-sizing: border-box;
         }
-
         header {
             padding: 30px;
             text-align: center;
@@ -123,7 +139,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             max-width: 800px;
             border-radius: 8px;
         }
-
         nav {
             float: left;
             width: 30%;
@@ -131,12 +146,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 20px;
             background-color: rgba(255, 255, 255, 0.85);
         }
-
         nav ul {
             list-style-type: none;
             padding: 0;
         }
-
         article {
             float: left;
             padding: 20px;
@@ -145,7 +158,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-align: left;
             background-color: rgba(255, 255, 255, 0.85);
         }
-
         section {
             max-width: 1000px;
             margin: 20px auto;
@@ -153,13 +165,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             overflow: hidden;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-
         section::after {
             content: "";
             display: table;
             clear: both;
         }
-
         footer {
             padding: 15px;
             text-align: center;
@@ -169,7 +179,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin: 20px auto;
             border-radius: 8px;
         }
-
         .animated-box {
             border: 2px solid rgba(0,0,0,0.3);
             padding: 20px;
@@ -179,7 +188,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             background-color: rgba(255, 255, 255, 0.85);
         }
-
         @media (max-width: 600px) {
             nav, article {
                 width: 100%;
@@ -189,14 +197,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 width: 100%;
             }
         }
-
         iframe {
             max-width: 100%;
             border: 2px solid rgba(0,0,0,0.2);
             border-radius: 6px;
             margin: 15px 0;
         }
-
         img {
             max-width: 100%;
             height: auto;
@@ -204,12 +210,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             background-color: rgba(255, 255, 255, 0.85);
         }
-
         a {
             text-decoration: none;
             color: #0d47a1;
         }
-
         a:hover {
             text-decoration: underline;
         }
@@ -218,7 +222,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
-    <!-- Section Title -->
+<?php if (!$is_verified): ?>
+    <!-- صفحه تایید ربات که قبل از ورود به سایت نمایش داده می‌شود -->
+    <div class="turnstile-overlay">
+        <div class="turnstile-box">
+            <h2>تایید امنیتی</h2>
+            <p>لطفاً برای ورود به سایت تایید کنید که ربات نیستید.</p>
+            <form action="" method="POST">
+                <!-- استفاده از Site Key جدید شما -->
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAAAEJZ2h-ZeJX6WRL" data-theme="light"></div>
+                <br>
+                <button type="submit" style="padding: 10px 20px; background-color: #0d47a1; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">تایید و ورود</button>
+            </form>
+            <?php if (!empty($verification_message)): ?>
+                <p style="color: red; margin-top: 15px;"><?php echo $verification_message; ?></p>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php else: ?>
+
+    <!-- محتوای اصلی سایت شما (بعد از تایید نمایش داده می‌شود) -->
     <h4 class="HP-title">
         <i><b><u>HP</u></b></i>
     </h4>
@@ -276,9 +299,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p style="font-size: xx-large;">Quick Update</p>
     </div>
 
-    <?php if (!empty($recaptcha_message)): ?>
-        <p style="font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 10px; width: fit-content; margin: 20px auto; border-radius: 5px;"><?php echo $recaptcha_message; ?></p>
-    <?php endif; ?>
     <header>
         <h2>About HP</h2>
     </header>
@@ -320,8 +340,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>This Site is Maded By</h2>
         <a href="https://hp.com" target="_blank">HP</a>
         <br><br>
-        <p style="font-size: 12px; color: #555;">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.</p>
+        <p style="font-size: 12px; color: #555;">This site is protected by Cloudflare Turnstile and the <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.</p>
     </div>
+
+<?php endif; ?>
 
 </body>
 </html>
