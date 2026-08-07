@@ -1,7 +1,7 @@
 <?php
 // Handle Google reCAPTCHA v2 (Invisible/No-Image style configuration preferred via implementation)
-$recaptcha_site_key = "";
-$recaptcha_secret_key = "";
+$rec_site_key = "6LeotnktAAAAAD9smf4dVq9erT6ojRBAldOImGHV";
+$rec_secret_key = "6LeotnktAAAAAPYJvoOr4S_RjNXniOKEebuz4OF9";
 $recaptcha_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($recaptcha_response)) {
         $verify_url = 'https://www.google.com/recaptcha/api/siteverify';
         $data = [
-            'secret' => $recaptcha_secret_key,
+            'secret' => $rec_secret_key,
             'response' => $recaptcha_response,
             'remoteip' => $_SERVER['REMOTE_ADDR']
         ];
@@ -44,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows 12 - HP Portal</title>
-    <!-- Include Google reCAPTCHA API script -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Include Google reCAPTCHA API script with site key -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeotnktAAAAAD9smf4dVq9erT6ojRBAldOImGHV" async defer></script>
     <style>
         @keyframes fadeInSlide {
             0% {
@@ -311,6 +311,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2></h2>
         <p style="font-size: xx-large;">Quick Update</p>
     </div>
+
+    <!-- بخش مربوط به نمایش پیام ریکپچا (در صورت نیاز) -->
+    <?php if (!empty($recaptcha_message)): ?>
+        <p style="font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 10px; width: fit-content; margin: 20px auto; border-radius: 5px;"><?php echo $recaptcha_message; ?></p>
+    <?php endif; ?>
 
     <h2>Iframe</h2>
     <p>You Can Use The Site Iframe</p>
