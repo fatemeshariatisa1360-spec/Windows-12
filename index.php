@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result_json = json_decode($result);
 
         if ($result_json && $result_json->success) {
-            // تایید موفقیت‌آمیز: تنظیم یک کوکی موقت Session که با بستن مرورگر منقضی می‌شود
+            // تایید موفقیت‌آمیز: تنظیم کوکی موقت Session که با بستن مرورگر منقضی می‌شود
             setcookie("turnstile_verified", "true", 0, "/");
             // رفرش کردن صفحه برای ورود به بخش اصلی سایت
             header("Location: " . $_SERVER['PHP_SELF']);
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// بررسی اینکه آیا کاربر قبلاً در این نشست (Session) تایید کرده است یا خیر
+// بررسی اینکه آیا کاربر در این نشست تایید کرده است یا خیر
 $is_verified = isset($_COOKIE['turnstile_verified']) && $_COOKIE['turnstile_verified'] === "true";
 ?>
 <!DOCTYPE html>
@@ -63,7 +63,6 @@ $is_verified = isset($_COOKIE['turnstile_verified']) && $_COOKIE['turnstile_veri
             padding: 0;
             color: #2b2b2b;
         }
-        /* استایل صفحه اختصاصی تایید ربات (در صورتی که تایید نشده باشد) */
         .turnstile-overlay {
             position: fixed;
             top: 0;
@@ -223,14 +222,16 @@ $is_verified = isset($_COOKIE['turnstile_verified']) && $_COOKIE['turnstile_veri
 <body>
 
 <?php if (!$is_verified): ?>
-    <!-- صفحه تایید ربات که قبل از ورود به سایت نمایش داده می‌شود -->
+    <!-- صفحه تایید ربات قبل از ورود به سایت -->
     <div class="turnstile-overlay">
         <div class="turnstile-box">
             <h2>تایید امنیتی</h2>
             <p>لطفاً برای ورود به سایت تایید کنید که ربات نیستید.</p>
             <form action="" method="POST">
-                <!-- استفاده از Site Key جدید شما -->
-                <div class="cf-turnstile" data-sitekey="0x4AAAAAAAEJZ2h-ZeJX6WRL" data-theme="light"></div>
+                <!-- استفاده از Site Key صحیح -->
+                <div style="margin: 15px auto; display: flex; justify-content: center;">
+                    <div class="cf-turnstile" data-sitekey="0x4AAAAAAAEJZ2h-ZeJX6WRL" data-theme="light"></div>
+                </div>
                 <br>
                 <button type="submit" style="padding: 10px 20px; background-color: #0d47a1; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">تایید و ورود</button>
             </form>
@@ -241,7 +242,7 @@ $is_verified = isset($_COOKIE['turnstile_verified']) && $_COOKIE['turnstile_veri
     </div>
 <?php else: ?>
 
-    <!-- محتوای اصلی سایت شما (بعد از تایید نمایش داده می‌شود) -->
+    <!-- محتوای اصلی سایت -->
     <h4 class="HP-title">
         <i><b><u>HP</u></b></i>
     </h4>
