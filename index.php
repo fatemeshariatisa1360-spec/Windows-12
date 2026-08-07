@@ -1,5 +1,5 @@
 <?php
-// Handle Google reCAPTCHA v2 (Invisible/No-Image style configuration preferred via implementation)
+// Handle Google reCAPTCHA v3 configuration implementation
 $rec_site_key = "6LeotnktAAAAAD9smf4dVq9erT6ojRBAldOImGHV";
 $rec_secret_key = "6LeotnktAAAAAPYJvoOr4S_RjNXniOKEebuz4OF9";
 $recaptcha_message = "";
@@ -101,18 +101,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 0;
         }
 
-        /* Applying continuous synchronized animations to elements and text */
-        *, h1, h2, h3, h4, h5, h6, p, a, th, td, span, li {
+        /* Applying continuous synchronized animations safely, excluding recaptcha */
+        body *:not(.grecaptcha-badge):not(.grecaptcha-badge *) {
             animation: rainbowText 4s ease infinite;
         }
 
-        .HP-title, .highlight-text, table, .city, header, nav, article, footer, .animated-box, iframe, img {
+        .HP-title, .highlight-text, table, .city, header, nav, article, footer, .animated-box, iframe:not(.grecaptcha-badge iframe), img {
             animation: rainbowContainerBg 4s ease infinite, fadeInSlide 1s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
         }
 
-        /* Fix for Google reCAPTCHA badge styling issue */
-        .grecaptcha-badge, .grecaptcha-badge * {
+        /* Complete Reset for Google reCAPTCHA Badge to fix text blur/glitch */
+        .grecaptcha-badge {
             animation: none !important;
+            filter: none !important;
+            text-shadow: none !important;
+        }
+        .grecaptcha-badge * {
+            animation: none !important;
+            color: #fff !important;
+            text-shadow: none !important;
+            filter: none !important;
         }
 
         .HP-title {
@@ -218,19 +226,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        .recaptcha-container {
-            margin: 30px auto;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .recaptcha-msg {
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
         iframe {
             max-width: 100%;
             border: 2px solid rgba(0,0,0,0.2);
@@ -317,7 +312,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p style="font-size: xx-large;">Quick Update</p>
     </div>
 
-    <!-- بخش مربوط به نمایش پیام ریکپچا (در صورت نیاز) -->
     <?php if (!empty($recaptcha_message)): ?>
         <p style="font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 10px; width: fit-content; margin: 20px auto; border-radius: 5px;"><?php echo $recaptcha_message; ?></p>
     <?php endif; ?>
