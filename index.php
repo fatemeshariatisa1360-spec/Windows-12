@@ -1,16 +1,16 @@
 <?php
-// تنظیمات اعتبار سنجی Cloudflare Turnstile
-$turnstile_secret_key = "0x4AAAAAAEJZ2f5akLI-Nb6Q2B6WBXnyB2M";
+// تنظیمات اعتبار سنجی Google reCAPTCHA v2
+$recaptcha_secret_key = "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"; // کلید مخفی تست گوگل
 $verification_message = "";
 
 // بررسی اینکه آیا کاربر از سمت ویجت تایید را فرستاده است یا خیر
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $token = $_POST['cf-turnstile-response'] ?? '';
+    $token = $_POST['g-recaptcha-response'] ?? '';
     
     if (!empty($token)) {
-        $verify_url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+        $verify_url = 'https://www.google.com/recaptcha/api/siteverify';
         $data = [
-            'secret' => $turnstile_secret_key,
+            'secret' => $recaptcha_secret_key,
             'response' => $token,
             'remoteip' => $_SERVER['REMOTE_ADDR']
         ];
@@ -28,8 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result_json = json_decode($result);
 
         if ($result_json && $result_json->success) {
-            // تایید موفقیت‌آمیز: تنظیم کوکی موقت Session که با بستن مرورگر منقضی می‌شود
-            setcookie("turnstile_verified", "true", 0, "/");
+            // تایید موفقیت‌آمیز: تنظیم کوکی موقت که با بستن مرورگر منقضی می‌شود
+            setcookie("recaptcha_verified", "true", 0, "/");
             // رفرش کردن صفحه برای ورود به بخش اصلی سایت
             header("Location: " . $_SERVER['PHP_SELF']);
             exit();
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // بررسی اینکه آیا کاربر در این نشست تایید کرده است یا خیر
-$is_verified = isset($_COOKIE['turnstile_verified']) && $_COOKIE['turnstile_verified'] === "true";
+$is_verified = isset($_COOKIE['recaptcha_verified']) && $_COOKIE['recaptcha_verified'] === "true";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,8 +51,8 @@ $is_verified = isset($_COOKIE['turnstile_verified']) && $_COOKIE['turnstile_veri
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Windows 12 - HP Portal</title>
-    <!-- اسکریپت رسمی کلادفلر Turnstile -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <!-- اسکریپت رسمی Google reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
         body {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -63,7 +63,7 @@ $is_verified = isset($_COOKIE['turnstile_verified']) && $_COOKIE['turnstile_veri
             padding: 0;
             color: #2b2b2b;
         }
-        .turnstile-overlay {
+        .recaptcha-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -76,7 +76,7 @@ $is_verified = isset($_COOKIE['turnstile_verified']) && $_COOKIE['turnstile_veri
             align-items: center;
             z-index: 9999;
         }
-        .turnstile-box {
+        .recaptcha-box {
             background: white;
             padding: 40px;
             border-radius: 12px;
@@ -223,14 +223,14 @@ $is_verified = isset($_COOKIE['turnstile_verified']) && $_COOKIE['turnstile_veri
 
 <?php if (!$is_verified): ?>
     <!-- صفحه تایید ربات قبل از ورود به سایت -->
-    <div class="turnstile-overlay">
-        <div class="turnstile-box">
+    <div class="recaptcha-overlay">
+        <div class="recaptcha-box">
             <h2>تایید امنیتی</h2>
             <p>لطفاً برای ورود به سایت تایید کنید که ربات نیستید.</p>
             <form action="" method="POST">
-                <!-- استفاده از Site Key صحیح -->
+                <!-- استفاده از Site Key گوگل -->
                 <div style="margin: 15px auto; display: flex; justify-content: center;">
-                    <div class="cf-turnstile" data-sitekey="0x4AAAAAAAEJZ2h-ZeJX6WRL" data-theme="light"></div>
+                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
                 </div>
                 <br>
                 <button type="submit" style="padding: 10px 20px; background-color: #0d47a1; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">تایید و ورود</button>
@@ -341,7 +341,7 @@ $is_verified = isset($_COOKIE['turnstile_verified']) && $_COOKIE['turnstile_veri
         <h2>This Site is Maded By</h2>
         <a href="https://hp.com" target="_blank">HP</a>
         <br><br>
-        <p style="font-size: 12px; color: #555;">This site is protected by Cloudflare Turnstile and the <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.</p>
+        <p style="font-size: 12px; color: #555;">This site is protected by reCAPTCHA and the <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.</p>
     </div>
 
 <?php endif; ?>
