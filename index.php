@@ -101,26 +101,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 0;
         }
 
-        /* Applying continuous synchronized animations safely, excluding recaptcha */
-        body *:not(.grecaptcha-badge):not(.grecaptcha-badge *) {
+        /* Safe text animation applied explicitly to text elements, avoiding recaptcha completely */
+        h1, h2, h3, h4, h5, h6, p, a, th, td, span, li {
             animation: rainbowText 4s ease infinite;
         }
 
-        .HP-title, .highlight-text, table, .city, header, nav, article, footer, .animated-box, iframe:not(.grecaptcha-badge iframe), img {
+        .HP-title, .highlight-text, table, .city, header, nav, article, footer, .animated-box, img {
             animation: rainbowContainerBg 4s ease infinite, fadeInSlide 1s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-        }
-
-        /* Complete Reset for Google reCAPTCHA Badge to fix text blur/glitch */
-        .grecaptcha-badge {
-            animation: none !important;
-            filter: none !important;
-            text-shadow: none !important;
-        }
-        .grecaptcha-badge * {
-            animation: none !important;
-            color: #fff !important;
-            text-shadow: none !important;
-            filter: none !important;
         }
 
         .HP-title {
