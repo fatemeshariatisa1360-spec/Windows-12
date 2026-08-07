@@ -51,19 +51,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             line-height: 1.6;
             text-align: center;
-            background-color: #e0f2f1; /* Solid turquoise-green background */
+            background-color: #e0f2f1;
             margin: 0;
             padding: 0;
             color: #2b2b2b;
         }
 
-        /* Force reCAPTCHA badge to position cleanly without clipping */
+        /* Completely hide the floating Google reCAPTCHA badge */
         .grecaptcha-badge {
-            bottom: 20px !important;
-            right: 20px !important;
-            transform: scale(1.0) !important;
-            transform-origin: bottom right !important;
-            transition: all 0.3s ease !important;
+            display: none !important;
         }
 
         .HP-title {
@@ -330,6 +326,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <br>
         <h2>This Site is Maded By</h2>
         <a href="https://hp.com" target="_blank">HP</a>
+        <br><br>
+        <p style="font-size: 12px; color: #555;">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.</p>
     </div>
 
 </body>
