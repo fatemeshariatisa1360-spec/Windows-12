@@ -47,67 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Include Google reCAPTCHA API script with site key -->
     <script src="https://www.google.com/recaptcha/api.js?render=6LeotnktAAAAAD9smf4dVq9erT6ojRBAldOImGHV" async defer></script>
     <style>
-        @keyframes fadeInSlide {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes rainbowBg {
-            0% { background-color: #ff9a9e; }
-            10% { background-color: #fad0c4; }
-            20% { background-color: #ffd1ff; }
-            30% { background-color: #a1c4fd; }
-            40% { background-color: #c2e9fb; }
-            50% { background-color: #d4fc79; }
-            60% { background-color: #96e6a1; }
-            70% { background-color: #fccb90; }
-            80% { background-color: #e2b0ff; }
-            90% { background-color: #ffecd2; }
-            100% { background-color: #ff9a9e; }
-        }
-
-        @keyframes rainbowText {
-            0% { color: #2b2b2b; }
-            15% { color: #880e4f; }
-            30% { color: #0d47a1; }
-            45% { color: #1b5e20; }
-            60% { color: #e65100; }
-            75% { color: #4a148c; }
-            90% { color: #006064; }
-            100% { color: #2b2b2b; }
-        }
-
-        @keyframes rainbowContainerBg {
-            0% { background-color: rgba(255, 255, 255, 0.85); }
-            20% { background-color: rgba(220, 237, 200, 0.85); }
-            40% { background-color: rgba(187, 222, 251, 0.85); }
-            60% { background-color: rgba(255, 224, 178, 0.85); }
-            80% { background-color: rgba(225, 190, 231, 0.85); }
-            100% { background-color: rgba(255, 255, 255, 0.85); }
-        }
-
         body {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             line-height: 1.6;
             text-align: center;
-            animation: rainbowBg 4s ease infinite, fadeInSlide 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            background-color: #e0f2f1; /* Solid turquoise-green background */
             margin: 0;
             padding: 0;
-        }
-
-        /* Safe dedicated class for text animation, avoiding third-party widgets like reCAPTCHA */
-        .rainbow-text {
-            animation: rainbowText 4s ease infinite;
-        }
-
-        .HP-title, .highlight-text, table, .city, header, nav, article, footer, .animated-box, img {
-            animation: rainbowContainerBg 4s ease infinite, fadeInSlide 1s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+            color: #2b2b2b;
         }
 
         .HP-title {
@@ -117,6 +64,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 8px 20px;
             border-radius: 4px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.85);
+        }
+
+        .highlight-text {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 10px;
+            width: fit-content;
+            margin: 20px auto;
+            border-radius: 5px;
         }
 
         mark {
@@ -130,6 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 80%;
             margin: 20px auto;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background-color: rgba(255, 255, 255, 0.85);
         }
 
         td, th {
@@ -145,11 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .city:hover {
-            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.85);
         }
 
         * {
@@ -160,6 +113,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 30px;
             text-align: center;
             font-size: 35px;
+            background-color: rgba(255, 255, 255, 0.85);
+            margin: 20px auto;
+            max-width: 800px;
+            border-radius: 8px;
         }
 
         nav {
@@ -167,6 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 30%;
             min-height: 300px;
             padding: 20px;
+            background-color: rgba(255, 255, 255, 0.85);
         }
 
         nav ul {
@@ -180,6 +138,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 70%;
             min-height: 300px;
             text-align: left;
+            background-color: rgba(255, 255, 255, 0.85);
+        }
+
+        section {
+            max-width: 1000px;
+            margin: 20px auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         section::after {
@@ -192,6 +159,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 15px;
             text-align: center;
             clear: both;
+            background-color: rgba(255, 255, 255, 0.85);
+            max-width: 1000px;
+            margin: 20px auto;
+            border-radius: 8px;
         }
 
         .animated-box {
@@ -201,6 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 80%;
             margin: 20px auto;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.85);
         }
 
         @media (max-width: 600px) {
@@ -225,11 +197,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             height: auto;
             border-radius: 6px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.85);
         }
 
         a {
             text-decoration: none;
-            transition: color 0.2s ease;
+            color: #0d47a1;
         }
 
         a:hover {
@@ -241,15 +214,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
     <!-- Section Title -->
-    <h4 class="HP-title rainbow-text">
+    <h4 class="HP-title">
         <i><b><u>HP</u></b></i>
     </h4>
 
-    <p class="highlight-text rainbow-text">
+    <p class="highlight-text">
         <mark>The Windows 12 well Finish Made on 1 Year Later.</mark>
     </p>
 
-    <h2 class="rainbow-text">To Download Windows Versions, Visit Microsoft and Download For Free!</h2>
+    <h2>To Download Windows Versions, Visit Microsoft and Download For Free!</h2>
 
     <img src="https://w3schools.com/html/Workplace.jpg" width="394" height="379" alt="Windows 12" usemap="#WindowsMap">
 
@@ -260,94 +233,94 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </map>
 
     <br><br>
-    <h5 class="rainbow-text">You Need VPN To Download The Icon Of This Site. If You Don't Have VPN, Visit To Google Chrome Web Store And Search For VeePN And Download It.</h5>
-    <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/HP_logo_2025.svg/960px-HP_logo_2025.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail" target="_blank" class="rainbow-text">Download The Icon Of The Site</a>
+    <h5>You Need VPN To Download The Icon Of This Site. If You Don't Have VPN, Visit To Google Chrome Web Store And Search For VeePN And Download It.</h5>
+    <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/HP_logo_2025.svg/960px-HP_logo_2025.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail" target="_blank">Download The Icon Of The Site</a>
     <br><br><br>
 
-    <h2 class="rainbow-text">Company's Are Ready To Made Windows 12</h2>
+    <h2>Company's Are Ready To Made Windows 12</h2>
 
     <table>
         <tr>
-            <th class="rainbow-text">Company</th>
-            <th class="rainbow-text">Contact</th>
-            <th class="rainbow-text">Country</th>
+            <th>Company</th>
+            <th>Contact</th>
+            <th>Country</th>
         </tr>
         <tr>
-            <td class="rainbow-text">HP</td>
-            <td class="rainbow-text">Unknown</td>
-            <td class="rainbow-text">USA</td>
+            <td>HP</td>
+            <td>Unknown</td>
+            <td>USA</td>
         </tr>
     </table>
 
     <div class="city">
-        <h2 class="rainbow-text">Windows 12 Have Thoose</h2>
-        <p style="font-size: xx-large;" class="rainbow-text">Microsoft AI</p>
+        <h2>Windows 12 Have Thoose</h2>
+        <p style="font-size: xx-large;">Microsoft AI</p>
     </div> 
 
     <div class="city">
-        <h2 class="rainbow-text"></h2>
-        <p style="font-size: xx-large;" class="rainbow-text">More Dynamic User interface</p>
+        <h2></h2>
+        <p style="font-size: xx-large;">More Dynamic User interface</p>
     </div>
 
     <div class="city">
-        <h2 class="rainbow-text"></h2>
-        <p style="font-size: xx-large;" class="rainbow-text">Scalability</p>
+        <h2></h2>
+        <p style="font-size: xx-large;">Scalability</p>
     </div>
 
     <div class="city">
-        <h2 class="rainbow-text"></h2>
-        <p style="font-size: xx-large;" class="rainbow-text">Quick Update</p>
+        <h2></h2>
+        <p style="font-size: xx-large;">Quick Update</p>
     </div>
 
     <?php if (!empty($recaptcha_message)): ?>
-        <p style="font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 10px; width: fit-content; margin: 20px auto; border-radius: 5px;" class="rainbow-text"><?php echo $recaptcha_message; ?></p>
+        <p style="font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 10px; width: fit-content; margin: 20px auto; border-radius: 5px;"><?php echo $recaptcha_message; ?></p>
     <?php endif; ?>
 
-    <h2 class="rainbow-text">Iframe</h2>
-    <p class="rainbow-text">You Can Use The Site Iframe</p>
+    <h2>Iframe</h2>
+    <p>You Can Use The Site Iframe</p>
 
     <iframe src="http://localhost/auth/Windows 12.php" height="600" width="100%" style="max-width: 1300px;" title="Iframe"></iframe>
 
     <header>
-        <h2 class="rainbow-text">About HP</h2>
+        <h2>About HP</h2>
     </header>
 
     <section>
         <nav>
             <ul>
                 <br><br>
-                <h1 style="font-size: 24px;" class="rainbow-text">About HP</h1>
+                <h1 style="font-size: 24px;">About HP</h1>
             </ul>
         </nav>
         
         <article>
-            <h1 style="font-size: 18px; font-weight: normal;" class="rainbow-text">HP is an American multinational electronics conglomerate headquartered in California, USA. The company focuses primarily on the production of laptops and electronic devices, and some users are satisfied with its laptop manufacturing.</h1>
-            <p class="rainbow-text"></p>
-            <p class="rainbow-text"></p>
+            <h1 style="font-size: 18px; font-weight: normal;">HP is an American multinational electronics conglomerate headquartered in California, USA. The company focuses primarily on the production of laptops and electronic devices, and some users are satisfied with its laptop manufacturing.</h1>
+            <p></p>
+            <p></p>
         </article>
     </section>
 
     <footer>
-        <p style="font-size: x-large;" class="rainbow-text">About HP</p>
+        <p style="font-size: x-large;">About HP</p>
     </footer>
 
-    <h2 class="rainbow-text">login Page Iframe</h2>
+    <h2>login Page Iframe</h2>
 
     <iframe src="http://localhost/auth/login.php" height="600" width="100%" style="max-width: 1300px;" title="Iframe"></iframe>
 
     <div class="animated-box">
-        <h2 class="rainbow-text">If You Log in But You Cannot Go To You DashBoard With Iframe</h2>
-        <a href="http://localhost/auth/login.php?page=dashboard" target="_blank" class="rainbow-text">Direct access to the dashboard</a>
+        <h2>If You Log in But You Cannot Go To You DashBoard With Iframe</h2>
+        <a href="http://localhost/auth/login.php?page=dashboard" target="_blank">Direct access to the dashboard</a>
         <br><br>
-        <h2 class="rainbow-text">If You Don't Log in , Use The Login Page Iframe Or</h2>
-        <a href="http://localhost/auth/login.php" target="_blank" class="rainbow-text">Direct access to the Login Page</a>
+        <h2>If You Don't Log in , Use The Login Page Iframe Or</h2>
+        <a href="http://localhost/auth/login.php" target="_blank">Direct access to the Login Page</a>
     </div>
 
     <div class="animated-box">
-        <h2 class="rainbow-text">TelePhone Number : +989395391900</h2>
+        <h2>TelePhone Number : +989395391900</h2>
         <br>
-        <h2 class="rainbow-text">This Site is Maded By</h2>
-        <a href="https://hp.com" target="_blank" class="rainbow-text">HP</a>
+        <h2>This Site is Maded By</h2>
+        <a href="https://hp.com" target="_blank">HP</a>
     </div>
 
 </body>
