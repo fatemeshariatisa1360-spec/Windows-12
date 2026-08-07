@@ -57,6 +57,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #2b2b2b;
         }
 
+        /* Fix for Google reCAPTCHA v3 badge clipping/display issue */
+        .grecaptcha-badge {
+            visibility: visible !important;
+            position: fixed !important;
+            bottom: 14px !important;
+            right: 14px !important;
+            z-index: 999999 !important;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3) !important;
+        }
+
         .HP-title {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             width: fit-content;
