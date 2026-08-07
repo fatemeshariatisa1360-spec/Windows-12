@@ -110,6 +110,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             animation: rainbowContainerBg 4s ease infinite, fadeInSlide 1s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
         }
 
+        /* Fix for Google reCAPTCHA badge styling issue */
+        .grecaptcha-badge, .grecaptcha-badge * {
+            animation: none !important;
+        }
+
         .HP-title {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             width: fit-content;
