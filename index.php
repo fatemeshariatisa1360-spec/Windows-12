@@ -281,8 +281,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p style="font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 10px; width: fit-content; margin: 20px auto; border-radius: 5px;"><?php echo $recaptcha_message; ?></p>
     <?php endif; ?>
 
-    <h2>Iframe</h2>
-    <p>You Can Use The Site Iframe</p>
+    <h2>Site Old Version Iframe</h2>
+    <p>You Can Use The Site Old Version Iframe</p>
 
     <iframe src="http://localhost/auth/Windows 12.php" height="600" width="100%" style="max-width: 1300px;" title="Iframe"></iframe>
 
