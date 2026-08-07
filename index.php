@@ -101,8 +101,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 0;
         }
 
-        /* Safe text animation applied explicitly to text elements, avoiding recaptcha completely */
-        h1, h2, h3, h4, h5, h6, p, a, th, td, span, li {
+        /* Safe dedicated class for text animation, avoiding third-party widgets like reCAPTCHA */
+        .rainbow-text {
             animation: rainbowText 4s ease infinite;
         }
 
@@ -241,15 +241,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
     <!-- Section Title -->
-    <h4 class="HP-title">
+    <h4 class="HP-title rainbow-text">
         <i><b><u>HP</u></b></i>
     </h4>
 
-    <p class="highlight-text">
+    <p class="highlight-text rainbow-text">
         <mark>The Windows 12 well Finish Made on 1 Year Later.</mark>
     </p>
 
-    <h2>To Download Windows Versions, Visit Microsoft and Download For Free!</h2>
+    <h2 class="rainbow-text">To Download Windows Versions, Visit Microsoft and Download For Free!</h2>
 
     <img src="https://w3schools.com/html/Workplace.jpg" width="394" height="379" alt="Windows 12" usemap="#WindowsMap">
 
@@ -260,94 +260,94 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </map>
 
     <br><br>
-    <h5>You Need VPN To Download The Icon Of This Site. If You Don't Have VPN, Visit To Google Chrome Web Store And Search For VeePN And Download It.</h5>
-    <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/HP_logo_2025.svg/960px-HP_logo_2025.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail" target="_blank">Download The Icon Of The Site</a>
+    <h5 class="rainbow-text">You Need VPN To Download The Icon Of This Site. If You Don't Have VPN, Visit To Google Chrome Web Store And Search For VeePN And Download It.</h5>
+    <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/HP_logo_2025.svg/960px-HP_logo_2025.svg.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=thumbnail" target="_blank" class="rainbow-text">Download The Icon Of The Site</a>
     <br><br><br>
 
-    <h2>Company's Are Ready To Made Windows 12</h2>
+    <h2 class="rainbow-text">Company's Are Ready To Made Windows 12</h2>
 
     <table>
         <tr>
-            <th>Company</th>
-            <th>Contact</th>
-            <th>Country</th>
+            <th class="rainbow-text">Company</th>
+            <th class="rainbow-text">Contact</th>
+            <th class="rainbow-text">Country</th>
         </tr>
         <tr>
-            <td>HP</td>
-            <td>Unknown</td>
-            <td>USA</td>
+            <td class="rainbow-text">HP</td>
+            <td class="rainbow-text">Unknown</td>
+            <td class="rainbow-text">USA</td>
         </tr>
     </table>
 
     <div class="city">
-        <h2>Windows 12 Have Thoose</h2>
-        <p style="font-size: xx-large;">Microsoft AI</p>
+        <h2 class="rainbow-text">Windows 12 Have Thoose</h2>
+        <p style="font-size: xx-large;" class="rainbow-text">Microsoft AI</p>
     </div> 
 
     <div class="city">
-        <h2></h2>
-        <p style="font-size: xx-large;">More Dynamic User interface</p>
+        <h2 class="rainbow-text"></h2>
+        <p style="font-size: xx-large;" class="rainbow-text">More Dynamic User interface</p>
     </div>
 
     <div class="city">
-        <h2></h2>
-        <p style="font-size: xx-large;">Scalability</p>
+        <h2 class="rainbow-text"></h2>
+        <p style="font-size: xx-large;" class="rainbow-text">Scalability</p>
     </div>
 
     <div class="city">
-        <h2></h2>
-        <p style="font-size: xx-large;">Quick Update</p>
+        <h2 class="rainbow-text"></h2>
+        <p style="font-size: xx-large;" class="rainbow-text">Quick Update</p>
     </div>
 
     <?php if (!empty($recaptcha_message)): ?>
-        <p style="font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 10px; width: fit-content; margin: 20px auto; border-radius: 5px;"><?php echo $recaptcha_message; ?></p>
+        <p style="font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 10px; width: fit-content; margin: 20px auto; border-radius: 5px;" class="rainbow-text"><?php echo $recaptcha_message; ?></p>
     <?php endif; ?>
 
-    <h2>Iframe</h2>
-    <p>You Can Use The Site Iframe</p>
+    <h2 class="rainbow-text">Iframe</h2>
+    <p class="rainbow-text">You Can Use The Site Iframe</p>
 
     <iframe src="http://localhost/auth/Windows 12.php" height="600" width="100%" style="max-width: 1300px;" title="Iframe"></iframe>
 
     <header>
-        <h2>About HP</h2>
+        <h2 class="rainbow-text">About HP</h2>
     </header>
 
     <section>
         <nav>
             <ul>
                 <br><br>
-                <h1 style="font-size: 24px;">About HP</h1>
+                <h1 style="font-size: 24px;" class="rainbow-text">About HP</h1>
             </ul>
         </nav>
         
         <article>
-            <h1 style="font-size: 18px; font-weight: normal;">HP is an American multinational electronics conglomerate headquartered in California, USA. The company focuses primarily on the production of laptops and electronic devices, and some users are satisfied with its laptop manufacturing.</h1>
-            <p></p>
-            <p></p>
+            <h1 style="font-size: 18px; font-weight: normal;" class="rainbow-text">HP is an American multinational electronics conglomerate headquartered in California, USA. The company focuses primarily on the production of laptops and electronic devices, and some users are satisfied with its laptop manufacturing.</h1>
+            <p class="rainbow-text"></p>
+            <p class="rainbow-text"></p>
         </article>
     </section>
 
     <footer>
-        <p style="font-size: x-large;">About HP</p>
+        <p style="font-size: x-large;" class="rainbow-text">About HP</p>
     </footer>
 
-    <h2>login Page Iframe</h2>
+    <h2 class="rainbow-text">login Page Iframe</h2>
 
     <iframe src="http://localhost/auth/login.php" height="600" width="100%" style="max-width: 1300px;" title="Iframe"></iframe>
 
     <div class="animated-box">
-        <h2>If You Log in But You Cannot Go To You DashBoard With Iframe</h2>
-        <a href="http://localhost/auth/login.php?page=dashboard" target="_blank">Direct access to the dashboard</a>
+        <h2 class="rainbow-text">If You Log in But You Cannot Go To You DashBoard With Iframe</h2>
+        <a href="http://localhost/auth/login.php?page=dashboard" target="_blank" class="rainbow-text">Direct access to the dashboard</a>
         <br><br>
-        <h2>If You Don't Log in , Use The Login Page Iframe Or</h2>
-        <a href="http://localhost/auth/login.php" target="_blank">Direct access to the Login Page</a>
+        <h2 class="rainbow-text">If You Don't Log in , Use The Login Page Iframe Or</h2>
+        <a href="http://localhost/auth/login.php" target="_blank" class="rainbow-text">Direct access to the Login Page</a>
     </div>
 
     <div class="animated-box">
-        <h2>TelePhone Number : +989395391900</h2>
+        <h2 class="rainbow-text">TelePhone Number : +989395391900</h2>
         <br>
-        <h2>This Site is Maded By</h2>
-        <a href="https://hp.com" target="_blank">HP</a>
+        <h2 class="rainbow-text">This Site is Maded By</h2>
+        <a href="https://hp.com" target="_blank" class="rainbow-text">HP</a>
     </div>
 
 </body>
