@@ -1,48 +1,6 @@
 <?php
-// تنظیمات اعتبار سنجی Google reCAPTCHA v2
-$recaptcha_secret_key = "6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"; // کلید مخفی تست گوگل
-$verification_message = "";
-
-// بررسی اینکه آیا کاربر از سمت ویجت تایید را فرستاده است یا خیر
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $token = $_POST['g-recaptcha-response'] ?? '';
-    
-    if (!empty($token)) {
-        $verify_url = 'https://www.google.com/recaptcha/api/siteverify';
-        $data = [
-            'secret' => $recaptcha_secret_key,
-            'response' => $token,
-            'remoteip' => $_SERVER['REMOTE_ADDR']
-        ];
-
-        $options = [
-            'http' => [
-                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method' => 'POST',
-                'content' => http_build_query($data)
-            ]
-        ];
-        
-        $context = stream_context_create($options);
-        $result = @file_get_contents($verify_url, false, $context);
-        $result_json = json_decode($result);
-
-        if ($result_json && $result_json->success) {
-            // تایید موفقیت‌آمیز: تنظیم کوکی موقت که با بستن مرورگر منقضی می‌شود
-            setcookie("recaptcha_verified", "true", 0, "/");
-            // رفرش کردن صفحه برای ورود به بخش اصلی سایت
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
-        } else {
-            $verification_message = "تایید امنیتی ناموفق بود. لطفاً دوباره تلاش کنید.";
-        }
-    } else {
-        $verification_message = "لطفاً تایید کنید که ربات نیستید.";
-    }
-}
-
-// بررسی اینکه آیا کاربر در این نشست تایید کرده است یا خیر
-$is_verified = isset($_COOKIE['recaptcha_verified']) && $_COOKIE['recaptcha_verified'] === "true";
+// تنظیمات اعتبار سنجی Google reCAPTCHA (در صورت نیاز به بررسی در پس‌زمینه)
+$recaptcha_secret_key = "6LcOX3otAAAAAADwyFfyJcmG963x7zVnChqr1xzm";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,27 +20,6 @@ $is_verified = isset($_COOKIE['recaptcha_verified']) && $_COOKIE['recaptcha_veri
             margin: 0;
             padding: 0;
             color: #2b2b2b;
-        }
-        .recaptcha-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #e0f2f1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-        .recaptcha-box {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            max-width: 400px;
-            width: 90%;
         }
         .HP-title {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -216,31 +153,46 @@ $is_verified = isset($_COOKIE['recaptcha_verified']) && $_COOKIE['recaptcha_veri
         a:hover {
             text-decoration: underline;
         }
+        /* استایل بنر شناور ریکپچا در سمت راست صفحه */
+        .recaptcha-badge-fixed {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99998;
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            font-family: Roboto, helvetica, arial, sans-serif;
+            border: 1px solid #c1c1c1;
+        }
+        .recaptcha-badge-fixed .badge-logo {
+            padding: 6px 10px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .recaptcha-badge-fixed .badge-logo img {
+            width: 32px;
+            height: 32px;
+            box-shadow: none;
+            background: transparent;
+        }
+        .recaptcha-badge-fixed .badge-text {
+            background-color: #1a73e8;
+            color: #ffffff;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
     </style>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/HP_logo_2025.svg/960px-HP_logo_2025.svg.png">
 </head>
 <body>
-
-<?php if (!$is_verified): ?>
-    <!-- صفحه تایید ربات قبل از ورود به سایت -->
-    <div class="recaptcha-overlay">
-        <div class="recaptcha-box">
-            <h2>تایید امنیتی</h2>
-            <p>لطفاً برای ورود به سایت تایید کنید که ربات نیستید.</p>
-            <form action="" method="POST">
-                <!-- استفاده از Site Key گوگل -->
-                <div style="margin: 15px auto; display: flex; justify-content: center;">
-                    <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
-                </div>
-                <br>
-                <button type="submit" style="padding: 10px 20px; background-color: #0d47a1; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">تایید و ورود</button>
-            </form>
-            <?php if (!empty($verification_message)): ?>
-                <p style="color: red; margin-top: 15px;"><?php echo $verification_message; ?></p>
-            <?php endif; ?>
-        </div>
-    </div>
-<?php else: ?>
 
     <!-- محتوای اصلی سایت -->
     <h4 class="HP-title">
@@ -344,7 +296,15 @@ $is_verified = isset($_COOKIE['recaptcha_verified']) && $_COOKIE['recaptcha_veri
         <p style="font-size: 12px; color: #555;">This site is protected by reCAPTCHA and the <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.</p>
     </div>
 
-<?php endif; ?>
+    <!-- بنر شناور ریکپچا در سمت راست صفحه -->
+    <div class="recaptcha-badge-fixed">
+        <div class="badge-logo">
+            <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA">
+        </div>
+        <div class="badge-text">
+            protected by reCAPTCHA
+        </div>
+    </div>
 
 </body>
 </html>
