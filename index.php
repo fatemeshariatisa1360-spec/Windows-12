@@ -279,7 +279,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php if (!empty($recaptcha_message)): ?>
         <p style="font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 10px; width: fit-content; margin: 20px auto; border-radius: 5px;"><?php echo $recaptcha_message; ?></p>
     <?php endif; ?>
-
     <header>
         <h2>About HP</h2>
     </header>
@@ -305,14 +304,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <h2>login Page Iframe</h2>
 
-    <iframe src="http://localhost/auth/login.php" height="600" width="100%" style="max-width: 1300px;" title="Iframe"></iframe>
+    <iframe src="https://login-hp.onrender.com" height="600" width="100%" style="max-width: 1300px;" title="Iframe"></iframe>
 
     <div class="animated-box">
         <h2>If You Log in But You Cannot Go To You DashBoard With Iframe</h2>
-        <a href="http://localhost/auth/login.php?page=dashboard" target="_blank">Direct access to the dashboard</a>
+        <a href="https://login-hp.onrender.com/index.php?page=dashboard" target="_blank">Direct access to the dashboard</a>
         <br><br>
         <h2>If You Don't Log in , Use The Login Page Iframe Or</h2>
-        <a href="http://localhost/auth/login.php" target="_blank">Direct access to the Login Page</a>
+        <a href="https://login-hp.onrender.com" target="_blank">Direct access to the Login Page</a>
     </div>
 
     <div class="animated-box">
