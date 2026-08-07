@@ -1,5 +1,5 @@
 <?php
-// تنظیمات اعتبار سنجی Google reCAPTCHA (در صورت نیاز به بررسی در پس‌زمینه)
+// تنظیمات اعتبار سنجی Google reCAPTCHA
 $recaptcha_secret_key = "6LcOX3otAAAAAADwyFfyJcmG963x7zVnChqr1xzm";
 ?>
 <!DOCTYPE html>
@@ -153,7 +153,8 @@ $recaptcha_secret_key = "6LcOX3otAAAAAADwyFfyJcmG963x7zVnChqr1xzm";
         a:hover {
             text-decoration: underline;
         }
-        /* استایل بنر شناور ریکپچا در سمت راست صفحه */
+
+        /* طراحی ویجت شناور ریکپچا با قابلیت انیمیشن هاور (تصویر اول به تصویر دوم) */
         .recaptcha-badge-fixed {
             position: fixed;
             bottom: 20px;
@@ -167,6 +168,7 @@ $recaptcha_secret_key = "6LcOX3otAAAAAADwyFfyJcmG963x7zVnChqr1xzm";
             overflow: hidden;
             font-family: Roboto, helvetica, arial, sans-serif;
             border: 1px solid #c1c1c1;
+            cursor: pointer;
         }
         .recaptcha-badge-fixed .badge-logo {
             padding: 6px 10px;
@@ -174,6 +176,7 @@ $recaptcha_secret_key = "6LcOX3otAAAAAADwyFfyJcmG963x7zVnChqr1xzm";
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
         .recaptcha-badge-fixed .badge-logo img {
             width: 32px;
@@ -181,13 +184,25 @@ $recaptcha_secret_key = "6LcOX3otAAAAAADwyFfyJcmG963x7zVnChqr1xzm";
             box-shadow: none;
             background: transparent;
         }
+        /* بخش متن که در حالت عادی مخفی است و با هاور از سمت راست با انیمیشن باز می‌شود */
         .recaptcha-badge-fixed .badge-text {
             background-color: #1a73e8;
             color: #ffffff;
-            padding: 10px 16px;
+            padding: 10px 0;
             font-size: 13px;
             font-weight: 500;
             letter-spacing: 0.3px;
+            white-space: nowrap;
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-width 0.3s ease-in-out, opacity 0.3s ease-in-out, padding 0.3s ease-in-out;
+        }
+        /* وقتی موس روی ویجت می‌رود، متن به صورت انیمیشنی ظاهر می‌شود */
+        .recaptcha-badge-fixed:hover .badge-text {
+            max-width: 200px;
+            opacity: 1;
+            padding: 10px 16px;
         }
     </style>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/HP_logo_2025.svg/960px-HP_logo_2025.svg.png">
@@ -296,7 +311,7 @@ $recaptcha_secret_key = "6LcOX3otAAAAAADwyFfyJcmG963x7zVnChqr1xzm";
         <p style="font-size: 12px; color: #555;">This site is protected by reCAPTCHA and the <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.</p>
     </div>
 
-    <!-- بنر شناور ریکپچا در سمت راست صفحه -->
+    <!-- ویجت شناور ریکپچا در سمت راست (تصویر اول که با هاور موس تبدیل به تصویر دوم می‌شود) -->
     <div class="recaptcha-badge-fixed">
         <div class="badge-logo">
             <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA">
