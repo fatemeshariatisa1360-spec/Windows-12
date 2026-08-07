@@ -243,7 +243,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <br><br><br>
 
     <h2>Company's Are Ready To Made Windows 12</h2>
-
     <table>
         <tr>
             <th>Company</th>
